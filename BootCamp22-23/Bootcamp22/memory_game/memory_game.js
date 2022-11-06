@@ -95,19 +95,17 @@ function handleCardClick(event) {
     }
     else if (!currentCard.classList.contains("flipped")) {
         currentCard.style.backgroundColor = currentCard.classList[0];
-        currentCard.classList.add("flipped"); 
+        currentCard.classList.add("flipped"); //when going line by line, this happens before checkMatch, but when run normally, check Match happens before color shows up
         cardArr.push(currentCard); 
-        if (cardArr.length == 2) {
-            checkMatch(cardArr); //it's doing this before showing the "flipped" status (background color) of the second card (has something to do with state?)
-            }
-            else if (cardArr.length < 2) {
-                setTimeout(function (e) {
-                    flipBack(cardArr);
-                }, 2000);
-                }
+}
+if (cardArr.length == 2) {
+    checkMatch(cardArr);
+    }
+    else if (cardArr.length < 2) {
+        setTimeout(
+            flipBack(cardArr), 2000); //it's entering flipBack function but not doing anything
         }
 }
-
 // when the DOM loads
 createDivsForColors(shuffledColors);
 //need to identify cardA and cardB class list from somewhere.. so maybe loop through all the divs on the page and if class of flipped then push to an array, and array.length should only equal 2. Then, you can check the classList of each index in that array and compare them. if arr.length != 2 then keep the loop going. If they match, then keep class as "flipped". If they don't match, then the setTimeout and returnToOriginal fxns occur
@@ -115,19 +113,15 @@ function checkMatch (arr) {
     if (arr.length > 2) {
         alert ("You can only select 2 cards!");
     }
-
     else if (arr.length == 2 && arr[0].classList[0] === arr[1].classList[0]) { 
             alert("it's a match!")
             arr.length = 0;
              } 
-               
-
     else {
-             alert("no match!"); 
-                setTimeout(function (e) {
-                 flipBack(arr);
-                }, 1000);
+                setTimeout(
+                 flipBack(arr), 1000);
                 arr.length = 0;
+                alert ("no match!");
                 }
      //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" == 10?
     //    let divs = document.querySelectorAll("div");

@@ -22,9 +22,21 @@
     background-color: purple;
   }
 
-.original .flipped {
-  background-color: whitesmoke;
-}
+  .red .original  { 
+    background-color: whitesmoke;
+  }
+  .blue .original{
+    background-color: whitesmoke;
+  }
+  .green .original  {
+    background-color: whitesmoke;
+  }
+  .orange .original   {
+    background-color: whitesmoke;
+  }
+  .purple  .original {
+    background-color: whitesmoke;
+  }
 
 h1{
     text-align: center;

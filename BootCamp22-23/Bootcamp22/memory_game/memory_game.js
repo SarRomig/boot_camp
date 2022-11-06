@@ -111,7 +111,7 @@ createDivsForColors(shuffledColors);
 //need to identify cardA and cardB class list from somewhere.. so maybe loop through all the divs on the page and if class of flipped then push to an array, and array.length should only equal 2. Then, you can check the classList of each index in that array and compare them. if arr.length != 2 then keep the loop going. If they match, then keep class as "flipped". If they don't match, then the setTimeout and returnToOriginal fxns occur
 function checkMatch (arr) {
     if (arr.length > 2) {
-        alert ("You can only select 2 cards!");
+        alert ("You can only select 2 cards!"); 
     }
     else if (arr.length == 2 && arr[0].classList[0] === arr[1].classList[0]) { 
             alert("it's a match!")
@@ -130,9 +130,9 @@ function checkMatch (arr) {
     //    }
             }
 
-//THIS FUNCTION IS THE PROBLEM. entering set timeout function but flipping back isn't working
+//entering this function but not reflecting the removal of "flipped" aka reverting back to the #game div setting
 function flipBack(arr) {
     for (let i = 0; i < arr.length; i++) {
-        arr[i].classList.remove("flipped");
+        arr[i].classList.remove("flipped"); //it's removing "flipped" but this doesn't revert them back to original state
     }
 }

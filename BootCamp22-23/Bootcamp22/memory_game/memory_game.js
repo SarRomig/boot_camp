@@ -103,7 +103,7 @@ if (cardArr.length == 2) {
     }
     else if (cardArr.length < 2) {
         setTimeout(
-            flipBack(cardArr), 2000); //it's entering flipBack function but not doing anything
+            flipBack(cardArr), 2000); //flipBack is problem (state?)
         }
 }
 // when the DOM loads
@@ -130,9 +130,9 @@ function checkMatch (arr) {
     //    }
             }
 
-//entering this function but not reflecting the removal of "flipped" aka reverting back to the #game div setting
+//entering this function but not reflecting the removal of "flipped" aka not reverting back to the #game div setting
 function flipBack(arr) {
     for (let i = 0; i < arr.length; i++) {
-        arr[i].classList.remove("flipped"); //it's removing "flipped" but this doesn't revert them back to original state
+        arr[i].classList.remove("flipped"); //it's removing "flipped" but this doesn't revert them back to original state. Tried hard setting the background color to whitesmoke but no luck either
     }
 }

@@ -117,22 +117,23 @@ function checkMatch (arr) {
             alert("it's a match!")
             arr.length = 0;
              } 
-    else {
+    else { 
                 setTimeout(
                  flipBack(arr), 1000);
                 arr.length = 0;
                 alert ("no match!");
                 }
-     //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" == 10?
+     //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" = 10?
     //    let divs = document.querySelectorAll("div");
     //    if (divs.classList.contains("flipped")) {
     //     alert("You win!")
     //    }
-            }
+              }
+            
 
 //entering this function but not reflecting the removal of "flipped" aka not reverting back to the #game div setting
 function flipBack(arr) {
     for (let i = 0; i < arr.length; i++) {
-        arr[i].classList.remove("flipped"); //it's removing "flipped" but this doesn't revert them back to original state. Tried hard setting the background color to whitesmoke but no luck either
+        arr[i].classList.remove("flipped") //it's removing "flipped" but this doesn't revert them back to original state. Tried hard setting the background color to whitesmoke but no luck either
     }
 }

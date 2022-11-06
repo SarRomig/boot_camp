@@ -28,7 +28,10 @@ const startBtn = document.querySelector("button");
 startBtn.onclick = function (e) {
 gameStart();
 };
-
+let clicked = false
+document.querySelector('button').addEventListener("click", function() {
+   clicked = true;
+});
 const COLORS = [
   "red",
   "blue",
@@ -82,57 +85,60 @@ function createDivsForColors(colorArray) {
     gameContainer.append(newDiv);
   }
 }
-//each "card" already has the click listener attached to it
-//need to have cards in "original" state at the start of the game then returnToOriginal if no match
-//since the colors are shown when the DOM loads, would it make more sense to add a class of "original" along with that load and add CSS to make those white cards then add "flipped" in the handleCardClick fxn? So, cards start with class of color that is looped over and class of "original" which shows them as white, blank cards. Then, when clicked, card class changes to "flipped" which would show the color of the class it was assigned at the start. Not possible but the thought: element.textDecoration.fontColor? == "class"
 //set class of "flipped" to show color, set class of "original" to show blank card (maybe a more fun color than white) that way it can be toggled back and forth
 
 function handleCardClick(event) {
   let currentCard = event.target;
-  //need to designate cardA and cardB with color class background
   //this function will run with every click, so it needs to take into account that the card stays in "flipped" until handleCardClick runs again and checks both classes. it runs on the new Div(card) defined in previous function and is called on "click". 
-        //add conditional for clicking a different card..
-    if (!currentCard.classList.contains("flipped")) {
-        currentCard.style.backgroundColor = currentCard.classList[0];
-        currentCard.classList.add("flipped");
-        if (cardArr.length < 2 ) {
-        cardArr.push(currentCard); 
-        checkMatch(currentCard);
+    if (clicked != true) {
+        alert("You must press GO!"); // is there another way to stop game from starting if player doesn't press go?
     }
+    else if (!currentCard.classList.contains("flipped")) {
+        currentCard.style.backgroundColor = currentCard.classList[0];
+        currentCard.classList.add("flipped"); 
+        cardArr.push(currentCard); 
+        if (cardArr.length == 2) {
+            checkMatch(cardArr); //it's doing this before showing the "flipped" status (background color) of the second card (has something to do with state?)
+            }
+            else if (cardArr.length < 2) {
+                setTimeout(function (e) {
+                    flipBack(cardArr);
+                }, 2000);
+                }
+        }
 }
-   
-    // if(cardArr.length = 2 && cardArr[0] != cardArr[1]) { //only run checkMatch if 2 cards have been clicked
-    // checkMatch(currentCard);
-    // }
-}
-
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
 //need to identify cardA and cardB class list from somewhere.. so maybe loop through all the divs on the page and if class of flipped then push to an array, and array.length should only equal 2. Then, you can check the classList of each index in that array and compare them. if arr.length != 2 then keep the loop going. If they match, then keep class as "flipped". If they don't match, then the setTimeout and returnToOriginal fxns occur
-function checkMatch (card) {
+function checkMatch (arr) {
+    if (arr.length > 2) {
+        alert ("You can only select 2 cards!");
+    }
 
-    for(let i = 0; i < cardArr.length; i++) { //should only let 2 cards be checked at one time. If player selects a third card, do something aggressive
-        //compare the color classes of both spots in the arr 
-        console.log(cardArr)
-        if (cardArr[0].classList[0] === cardArr[1].classList[0]) { //can't read classList when there's only one clicked.
+    else if (arr.length == 2 && arr[0].classList[0] === arr[1].classList[0]) { 
             alert("it's a match!")
-        }   
+            arr.length = 0;
+             } 
+               
+
     else {
-        console.log("no match!"); //it's entering this else statement, not moving on to setTimeout
-        setTimeout(function (e) {
-            returnToOriginal(cardArr); //need to reset both cards back to original class of "original"; how to identify cardA and cardB? -- use the whole array since both cards in there will go back to their original state
+             alert("no match!"); 
+                setTimeout(function (e) {
+                 flipBack(arr);
                 }, 1000);
-        
-    }
-}
-}
+                arr.length = 0;
+                }
+     //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" == 10?
+    //    let divs = document.querySelectorAll("div");
+    //    if (divs.classList.contains("flipped")) {
+    //     alert("You win!")
+    //    }
+            }
 
-function returnToOriginal(arr) {
+//THIS FUNCTION IS THE PROBLEM. entering set timeout function but flipping back isn't working
+function flipBack(arr) {
     for (let i = 0; i < arr.length; i++) {
-        arr[0].classList.remove("flipped"); //should be only 2 items in arr (cardArr)
+        arr[i].classList.remove("flipped");
     }
 }
-
-//additionals: can only click 2 cards at once, have to be different cards
-//need to check when all cards at flipped and then end game

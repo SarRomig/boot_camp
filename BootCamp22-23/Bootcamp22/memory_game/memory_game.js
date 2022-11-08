@@ -1,5 +1,4 @@
 const gameContainer = document.getElementById("game");
-//need to compare 2 cards' classes (colors)
 let matchCount = 0;
 let cardArr = [];
 let timer;

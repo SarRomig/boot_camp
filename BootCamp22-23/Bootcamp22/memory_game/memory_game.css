@@ -8,6 +8,7 @@
   #game div:not(.flipped) {
     background-color: whitesmoke;
   }
+  
 .flipped.red { 
     background-color: red;
   }
@@ -23,7 +24,6 @@
 .flipped.purple {
     background-color: purple;
   }
-
 
 h1{
     text-align: center;

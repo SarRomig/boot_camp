@@ -1,7 +1,6 @@
 const gameContainer = document.getElementById("game");
 //need to compare 2 cards' classes (colors)
-let cardA;
-let cardB;
+let matchCount = 0;
 let cardArr = [];
 let timer;
 let timeLeft = 60;
@@ -91,49 +90,51 @@ function handleCardClick(event) {
   let currentCard = event.target;
   //this function will run with every click, so it needs to take into account that the card stays in "flipped" until handleCardClick runs again and checks both classes. it runs on the new Div(card) defined in previous function and is called on "click". 
     if (clicked != true) {
-        alert("You must press GO!"); // is there another way to stop game from starting if player doesn't press go?
+        alert("You must press GO!"); 
     }
     else if (!currentCard.classList.contains("flipped")) {
-        currentCard.style.backgroundColor = currentCard.classList[0];
         currentCard.classList.add("flipped"); //when going line by line, this happens before checkMatch, but when run normally, check Match happens before color shows up
         cardArr.push(currentCard); 
 }
-if (cardArr.length == 2) {
-    checkMatch(cardArr);
-    }
-    else if (cardArr.length < 2) {
-        setTimeout(
-            flipBack(cardArr), 2000); //flipBack is problem (state?)
-        }
+checkArrayLength(cardArr);
 }
+
+function checkArrayLength (arr) {
+  if (arr.length == 2) {
+    checkMatch(arr);
+    }
+  }
+
 // when the DOM loads
 createDivsForColors(shuffledColors);
-//need to identify cardA and cardB class list from somewhere.. so maybe loop through all the divs on the page and if class of flipped then push to an array, and array.length should only equal 2. Then, you can check the classList of each index in that array and compare them. if arr.length != 2 then keep the loop going. If they match, then keep class as "flipped". If they don't match, then the setTimeout and returnToOriginal fxns occur
+
 function checkMatch (arr) {
-    if (arr.length > 2) {
-        alert ("You can only select 2 cards!"); 
-    }
-    else if (arr.length == 2 && arr[0].classList[0] === arr[1].classList[0]) { 
-            alert("it's a match!")
+  if (arr.length == 2 && arr[0].classList[0] === arr[1].classList[0]) { 
+           checkIfWon(arr);
+           if (matchCount == 10){
+            alert("YOU WIN!");
+           }
             arr.length = 0;
              } 
     else { 
+      alert("No match!");
                 setTimeout(
-                 flipBack(arr), 1000);
-                arr.length = 0;
-                alert ("no match!");
+                 flipBack(arr), 2000);
+                 arr.length = 0;
                 }
-     //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" = 10?
-    //    let divs = document.querySelectorAll("div");
-    //    if (divs.classList.contains("flipped")) {
-    //     alert("You win!")
-    //    }
               }
-            
 
-//entering this function but not reflecting the removal of "flipped" aka not reverting back to the #game div setting
+ //if all divs on page have class of "flipped" it means they're all matched and player won, can we check all divs? or check if divs with "flipped" = 10?
+function checkIfWon (arr) {
+// let divs = document.querySelectorAll("flipped");
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].classList.contains("flipped")) {
+                  matchCount++
+                }
+          }
+        }
 function flipBack(arr) {
     for (let i = 0; i < arr.length; i++) {
-        arr[i].classList.remove("flipped") //it's removing "flipped" but this doesn't revert them back to original state. Tried hard setting the background color to whitesmoke but no luck either
+        arr[i].classList.remove("flipped"); //it's removing "flipped" but this doesn't revert them back to original state. Tried hard setting the background color to whitesmoke but no luck either
     }
 }

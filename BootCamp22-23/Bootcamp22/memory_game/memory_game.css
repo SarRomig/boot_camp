@@ -3,40 +3,27 @@
     height: 200px;
     margin: 30px;
     display: inline-block;
-    background-color: whitesmoke;
   }
   /* see below: is this how we add the case for both classes to be present in order for color to show up? */
-.flipped .red { 
+  #game div:not(.flipped) {
+    background-color: whitesmoke;
+  }
+.flipped.red { 
     background-color: red;
   }
-.flipped .blue {
+.flipped.blue {
     background-color: blue;
   }
-.flipped  .green {
+.flipped.green {
     background-color: green;
   }
-.flipped  .orange {
+.flipped.orange {
     background-color: orange;
-  }
-.flipped  .purple {
+} 
+.flipped.purple {
     background-color: purple;
   }
 
-  .red .original  { 
-    background-color: whitesmoke;
-  }
-  .blue .original{
-    background-color: whitesmoke;
-  }
-  .green .original  {
-    background-color: whitesmoke;
-  }
-  .orange .original   {
-    background-color: whitesmoke;
-  }
-  .purple  .original {
-    background-color: whitesmoke;
-  }
 
 h1{
     text-align: center;

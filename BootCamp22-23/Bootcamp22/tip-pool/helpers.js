@@ -24,3 +24,15 @@ function appendTd(tr, value) {
 
   tr.append(newTd);
 }
+
+
+//Step Three of Exercise: takes in a table row element and appends a new td element with value of X; when clicked, parent tr is removed from the dom
+appendDeleteBtn(tr) {
+  let newTd = document.createElement("td");
+  newTd.innerHTML = "X";
+  newTd.classList.add("deleteBtn");
+  newTd.addEventListener("click", function (e) {
+    //identify parent tr of added td
+    //delete
+  })
+}

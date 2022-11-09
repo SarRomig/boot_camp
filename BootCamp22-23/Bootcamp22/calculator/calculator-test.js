@@ -9,7 +9,7 @@ it('should calculate the monthly rate correctly', function () {
 });
 
 
-it("should return a result with 2 decimal places", function() {
+it("should return a result with 2 decimal places", function() { //should be a more direct way?
   expect(calculateMonthlyPayment({amount: 100000,
     years: 30,
     rate: 8.5})).toBe("768.91");
@@ -18,4 +18,8 @@ it("should return a result with 2 decimal places", function() {
       rate: 14.5})).toBe("409.65");
   });
 
-it("")
+it("should work with zeros", function () {
+  expect(calculateMonthlyPayment({amount: 100000,
+    years: 0.5,
+    rate: 0.015})).toBe("16667.40");
+  });

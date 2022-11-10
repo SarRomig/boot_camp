@@ -12,6 +12,11 @@ describe("Servers test (with setup and tear-down)", function() {
   });
 
   afterEach(function() {
-    // teardown logic
+    serverNameInput.value = "";
   });
 });
+
+it('should add a new server to allServers on submitServerInfo()', function () {
+  updateServerTable();
+ expect(
+}

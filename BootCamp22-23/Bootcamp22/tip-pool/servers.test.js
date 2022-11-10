@@ -11,12 +11,18 @@ describe("Servers test (with setup and tear-down)", function() {
     expect(allServers['server' + serverId].serverName).toEqual('Alice');
   });
 
+  it('should add an attribute to the new tr that is created', function () { //you can pass in code for this whole function to use within the expect function 
+    updateServerTable();
+   expect(newTr.setAttribute).toEqual(('id', "Alice"));
+  });
+
+
   afterEach(function() {
-    serverNameInput.value = "";
+    //update all servers object to equal zero
+    //update any changed inputs or htmls to ""
+    //update any attributes
+   
   });
 });
 
-it('should add a new server to allServers on submitServerInfo()', function () {
-  updateServerTable();
- expect(
-}
+

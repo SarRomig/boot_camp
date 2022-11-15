@@ -10,9 +10,9 @@ describe("payments test (with setup and tear-down)", function() {
     it("should add a payment to allPayments object", function () {
         submitPaymentInfo();   //expecting an object when it's run so run it then check the object-- createCurentPayment has billamt, tipamt, and tipPercent - adding that obect to allPayments
         expect(Object.keys(allPayments).length).toEqual(1);
-        expect(allPayments["payment"].billAmt).toEqual(50);
-        expect(allPayments["payment"].tipAmt).toEqual(10);
-        expect(allPayments["payment"].tipPercent).toEqual(20);
+        expect(allPayments["payment1"].billAmt).toEqual("50");
+        expect(allPayments["payment1"].tipAmt).toEqual("10");
+        expect(allPayments["payment1"].tipPercent).toEqual(20);
     });
     it("should not add a payment if there's no bill input", function() {
         billAmtInput.value = "";
@@ -25,11 +25,10 @@ describe("payments test (with setup and tear-down)", function() {
         allPayments["payment"] = curPayment;
         appendPaymentTable(curPayment);  //do what the function does and then check to see that it adds a td to the #paymentTable when all of the above exists
         let tdList = document.querySelectorAll("#paymentTable tbody tr td");
-        expect(tdList.length).toEqual(4); //4 when delete button is added
+        expect(tdList.length).toEqual(3); //4 when delete button is added
         expect(tdList[0].innerText).toEqual("$50");
         expect(tdList[1].innerText).toEqual("$10");
-        expect(tdList[2].innerText).toEqual("20");
-        //add expect(tdList[3].innerText.toEqual("x"); when delete button is added
+        expect(tdList[2].innerText).toEqual("20%");
     })
 
     //createCurPayment() -- this function's job is to take the bill and tip values, see if they exist (if not, it returns), if they exist, then return an object with billamt, tip amt, and tippercent (which calls calculateTipPercent)
@@ -46,8 +45,8 @@ describe("payments test (with setup and tear-down)", function() {
 
     it("should add a new payment object when all inputs exist", function() {
         let returnedPaymentObject = {
-     billAmt: 50,
-      tipAmt: 10,
+     billAmt: "50",
+      tipAmt: "10",
       tipPercent: 20
         }
         expect(createCurPayment()).toEqual(returnedPaymentObject);
@@ -72,7 +71,8 @@ describe("payments test (with setup and tear-down)", function() {
     allPayments = {};
     billAmtInput.value = '';
     tipAmtInput.value = '';
-
+    serverTbody.innerHTML = "";
+    paymentTbody.innerHTML = "";
     });
   });
   

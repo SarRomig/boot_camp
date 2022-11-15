@@ -4,6 +4,7 @@ describe("Helpers test (with setup and tear-down)", function() {
       tipAmtInput.value = 10;
       billAmtInput.value = 50;
       //need to run submitPaymentInfo?
+      submitPaymentInfo();
     });
 
 
@@ -13,9 +14,7 @@ describe("Helpers test (with setup and tear-down)", function() {
 
     billAmtInput.value = 50;
     tipAmtInput.value = 10;
-
     submitPaymentInfo();
-
     expect(sumPaymentTotal('tipAmt')).toEqual(20);
   });
 
@@ -49,6 +48,9 @@ describe("Helpers test (with setup and tear-down)", function() {
       //update any attributes
       billAmtInput.value = '';
       tipAmtInput.value = '';
+      allPayments = {};
+      serverTbody.innerHTML = "";
+      paymentId = 0;
     });
   });
   

@@ -22,7 +22,7 @@
   
   let arr = [];
   for (let i=0;i<rows;i++) { //rows will reach 6 and stop, so it will end up with 6 rows of empty arrays - can pass in WIDTH constant as rows?
-     arr[i] = []; //how to designate 7 empty spaces within this array? or does that not matter until it is in action
+     arr[i] = []; //how to designate 7 empty spaces within this array? or does that not matter until it is in action - seems to be... working?
       
   }
   return arr;
@@ -39,7 +39,7 @@
    top.setAttribute("id", "column-top");
    top.addEventListener("click", handleClick);
  
-   for (let x = 0; x < WIDTH; x++) {
+   for (let x = 0; x < WIDTH; x++) { 
      const headCell = document.createElement("td");
      headCell.setAttribute("id", x);
      top.append(headCell);
@@ -62,6 +62,7 @@
  
  function findSpotForCol(x) {
    // TODO: write the real version of this, rather than always returning 0
+
    return 0;
  }
  
@@ -69,13 +70,17 @@
  
  function placeInTable(y, x) {
    // TODO: make a div and insert into correct table cell
-   //identify correct table cell from findSpot ForCol?
+   //identify correct table cell from findSpot ForCol? then add class based on player1 or player2 to determine color. setAtritribute for .piece and .player1 - to start
+   //add div to correct "td" cell in the board. headCell for x and cell for y
+
+
  }
  
  /** endGame: announce game end */
  
  function endGame(msg) {
    // TODO: pop up alert message
+   alert(`${currPlayer} wins Connect4!`);
  }
  
  /** handleClick: handle click of column top to play piece */
@@ -101,9 +106,11 @@
  
    // check for tie
    // TODO: check if all cells in board are filled; if so call, call endGame
+   //if htmlBoard is full, aka # of divs with id of .piece equals however many squares there are WIDTHxHEIGHT
  
    // switch players
    // TODO: switch currPlayer 1 <-> 2
+   //currPlayer = 2, set id to .player2
  }
  
  /** checkForWin: check board cell-by-cell for "does a win start here?" */

@@ -9,7 +9,7 @@
  const HEIGHT = 6;
  
  let currPlayer = 1; // active player: 1 or 2
- const board = []; // array of rows, each row is array of cells  (board[y][x])
+ const board = []; // array of rows, each row is array of cells  (board[y][x]), where is this being fed into?
  
  /** makeBoard: create in-JS board structure:
   *    board = array of rows, each row is array of cells  (board[y][x])
@@ -22,7 +22,7 @@
   let arr = [];
   for (let i=0;i<rows;i++) { //rows will reach 6 and stop, so it will end up with 6 rows of empty arrays - can pass in WIDTH constant as rows?
      arr[i] = []; //how to designate 7 empty spaces within this array? or does that not matter until it is in action - seems to be... working?
-      
+      arr[i].length = WIDTH;
   }
   return arr;
 }
@@ -50,7 +50,7 @@
      for (let x = 0; x < WIDTH; x++) { // this second for loop sets the cells into the table row as td's with the y,x attribute which will populate into findSpotForCol
        const cell = document.createElement("td");
        cell.setAttribute("id", `${y}-${x}`);
-       row.append(cell); //physically adds the new cells to each table row, 7 across because width = 7
+       row.append(cell); //physically adds the new cells to each table row, 7 across because width = 7;
      }
      htmlBoard.append(row); //physically adds the new rows, 7 across, to the htmlBoard element
    }
@@ -61,10 +61,13 @@
  function findSpotForCol(x) {
    // TODO: write the real version of this, rather than always returning 0
    //this will run again for the next x it's given so return null if there are no empty y's
-    //use board variable and get id with y,x array information, then add 1 to y to get the top empty y position
-  
-   
-   return 0; //return top empty y position (tr - row) with id of y,x
+    //use board variable and get id with y,x array information, then add 1 to y to get the top empty y position -- fill board with player1 or player2 so you can check later if diag, horiz, or vert === currPlayer with each turn
+    for (let y = HEIGHT - 1; y >= 0; y--) { //subtract 1 to work backwards
+      if (!board[y][x]) {
+        return y; //looking for y position
+      }
+    }
+   return null; 
  }
  
  /** placeInTable: update DOM to place piece into HTML table of board */
@@ -72,7 +75,8 @@
  function placeInTable(y, x) {
    // TODO: make a div and insert into correct table cell 
    //create new div and add (toggle?) class based on player1 or player2 to determine color. setAtritribute for .piece and .player1 - to start
-   //add div to correct "td" cell in the board. identify correct table cell from findSpotForCol based on id of board then append the new div and 
+   //add div to correct "td" cell in the board. identify correct table cell from findSpotForCol based on id of board then append the new div 
+   //need to add color to cell to "set" it as the currPlayer's cell when checking for tie/win
 
 
  }
@@ -106,17 +110,16 @@
    }
  
    // check for tie
-   // TODO: check if all cells in board are filled; if so call, call endGame
-   //if htmlBoard is full, aka # of divs with id of .piece equals however many squares there are WIDTHxHEIGHT
+   // TODO: check if all cells in board are filled; if so call endGame
+   //if htmlBoard is full, aka # of divs with id of .piece equals however many squares there are WIDTHxHEIGHT -- but we're checking the board constant.
  
    // switch players
    // TODO: switch currPlayer 1 <-> 2
-   //set id to .player2 (toggle id?) 
    if (currPlayer == 1) { 
     currPlayer = 2;
       currPlayer.setAttribute(id, "player2");
     }; 
-   else if (currPlayer == 2) {
+    if (currPlayer == 2) {
      currPlayer = 1;
      currPlayer.setAttribute(id, "player1");
     };

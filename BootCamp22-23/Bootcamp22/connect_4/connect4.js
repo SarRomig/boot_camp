@@ -8,25 +8,23 @@
  const WIDTH = 7;
  const HEIGHT = 6;
  
- let currPlayer = 1; // active player: 1 or 2
+ let currPlayer = "Eagles"; // active player: 1 or 2
  const board = []; // array of rows, each row is array of cells  (board[y][x]), where is this being fed into?
  
  /** makeBoard: create in-JS board structure:
   *    board = array of rows, each row is array of cells  (board[y][x])
   */
  //
- function makeBoard(rows) {
+ function makeBoard() {
    // TODO: set "board" to empty HEIGHT x WIDTH matrix array
    //should set the global board variable to be an array of 6 arrays (height), each containing 7 items (width) - board[y][x]
-   //for loop to populate subarrays  -- array of arrays
-  let arr = [];
-  for (let i=0;i<rows;i++) { //rows will reach 6 and stop, so it will end up with 6 rows of empty arrays - can pass in WIDTH constant as rows?
-     arr[i] = []; //how to designate 7 empty spaces within this array? or does that not matter until it is in action - seems to be... working?
-      arr[i].length = WIDTH;
+   //for loop to populate subarrays  -- array of arrays; Array.from() converts iterables and Array-like values to Arrays. It treats holes as if they were undefined elements. We can use that to convert each hole to an undefined:]
+// The parameter {length: } is an Array-like object with length that contains only holes. https://2ality.com/2018/12/creating-arrays.html
+   for (let i = 0; i < HEIGHT; i++) {
+    board.push(Array.from({ length: WIDTH }));
   }
-  return arr;
 }
- 
+
  /** makeHtmlBoard: make HTML table and row of column tops. */
  
  function makeHtmlBoard() {
@@ -63,7 +61,8 @@
    //this will run again for the next x it's given so return null if there are no empty y's
     //use board variable and get id with y,x array information, then add 1 to y to get the top empty y position -- fill board with player1 or player2 so you can check later if diag, horiz, or vert === currPlayer with each turn
     for (let y = HEIGHT - 1; y >= 0; y--) { //subtract 1 to work backwards
-      if (!board[y][x]) {
+      //x is defined as array index but next line cannot read properties of undefined of x
+      if (!board[y][x]) { //if y and x aren't filled
         return y; //looking for y position
       }
     }
@@ -77,22 +76,29 @@
    //create new div and add (toggle?) class based on player1 or player2 to determine color. setAtritribute for .piece and .player1 - to start
    //add div to correct "td" cell in the board. identify correct table cell from findSpotForCol based on id of board then append the new div 
    //need to add color to cell to "set" it as the currPlayer's cell when checking for tie/win
+    const piece = document.createElement("div");
+    piece.classList.add("piece");
+    piece.classList.add(`${currPlayer}`)
 
-
+    const position = document.getElementById(`${y}-${x}`); //create a new position every time then reflect the updated board variable position
+    piece.style.transform = `${position}`;
+    piece.style.transition = 3;
+    position.append(piece);
  }
  
  /** endGame: announce game end */
  
  function endGame(msg) {
    // TODO: pop up alert message
-   alert(`${currPlayer} wins Connect4!`);
+   alert(msg);
+   location.reload();
  }
  
  /** handleClick: handle click of column top to play piece */
  
  function handleClick(evt) {
    // get x from ID of clicked cell
-   let x = +evt.target.id;
+   let x = +evt.target.id; 
  
    // get next spot in column (if none, ignore click)
    const y = findSpotForCol(x);
@@ -101,12 +107,13 @@
    }
  
    // place piece in board and add to HTML table
-   // TODO: add line to update in-memory board
+   // TODO: add line to update in-memory board -- update currPlayer at board position
+   board[y][x] = currPlayer;
    placeInTable(y, x);
  
    // check for win
    if (checkForWin()) {
-     return endGame(`Player ${currPlayer} won!`);
+     return endGame(`The ${currPlayer} won Connect4!`);
    }
  
    // check for tie
@@ -115,13 +122,11 @@
  
    // switch players
    // TODO: switch currPlayer 1 <-> 2
-   if (currPlayer == 1) { 
-    currPlayer = 2;
-      currPlayer.setAttribute(id, "player2");
-    }; 
-    if (currPlayer == 2) {
-     currPlayer = 1;
-     currPlayer.setAttribute(id, "player1");
+   if (currPlayer === "Eagles") { 
+    currPlayer = "Steelers";
+    }
+   else if (currPlayer === "Steelers") {
+     currPlayer = "Eagles";
     };
  }
  

@@ -1,41 +1,26 @@
 /* game board table */
-
+ body {
+  background-image: url(https://i.pinimg.com/originals/d7/15/59/d71559139bb8fdec74491290994593d5.png);
+}
 #board td {
     width: 50px;
     height: 50px;
     border: solid 1px whitesmoke;
   }
-  .background {
-    position: relative; 
-    z-index: -1;
-    left: -50%; 
-    width: 200%; 
-    height: 200%;
-  }
   h1 {
-    position: absolute;
     margin-top: -95px;
     color: whitesmoke;
     font-family: 'Cabin Sketch', cursive;
     font-size: 4rem;
-    padding-left: 25%;
-  }
-  .background img {
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    bottom: 0; 
-    margin: auto; 
-    min-width: 50%;
-    min-height: 50%;
+    margin: auto;
+    text-align: center;
+    display: block;
   }
   
-  table {
+ table {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 100px;
-    position: relative;
+    margin-top: 50px;
   }
 
   /* pieces are div within game table cells: draw as colored circles */
@@ -46,26 +31,53 @@
     margin: 5px;
     width: 80%;
     height: 80%;
+
   }
   
-  /* TODO: make pieces red/blue,  depending on player 1/2 piece */
-  .piece .player1{ /*if currPlayer = 1, color = red; if currPlayer = 2, color = blue; - add class when designating playing 1 vs player 2? Toggle class?*/
-    color: red
-    /*     background-image: url("https://i.pinimg.com/originals/e1/69/08/e169088e82bacaa742db4b2a9b35691b.png");
- */
+  /* TODO: make pieces red/blue,  depending on player 1/2 piece */ 
+  /* if currPlayer = 1, color = red; if currPlayer = 2, color = blue; - add class when designating playing 1 vs player 2 -- new div created everytime -duh. */
+
+  .piece.Eagles { 
+    background: url(https://i.etsystatic.com/22044032/r/il/34d42b/2789664016/il_fullxfull.2789664016_rocw.jpg);
+    background-size: 47px;
+    background-position: center;
+    background-repeat: no-repeat;
   }
-  .piece .player2{ /*if currPlayer = 1, color = red; if currPlayer = 2, color = blue; - add class when designating playing 1 vs player 2? */
-    color: blue
-        /*     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Pittsburgh_Steelers_logo.svg/2048px-Pittsburgh_Steelers_logo.svg.png");
- */
+  .piece.Steelers {
+    background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Pittsburgh_Steelers_logo.svg/2048px-Pittsburgh_Steelers_logo.svg.png);
+    background-size: 50px;
+    background-position: center;
   }
 
   /* column-top is table row of clickable areas for each column */
-  
+ 
   #column-top td {
     border: dashed 1px whitesmoke;
   }
   
   #column-top td:hover {
-    background-color: gold;
+    background-color: #FFB612;
+    opacity: 75%;
+    cursor:pointer;
+  }
+  #column-top td:active {
+    background-color: #004C54;
+  }
+
+  div {
+    font-size: medium;
+    font-family: 'Cabin Sketch';
+    text-align: center;
+    color: whitesmoke;
+  }
+  #eagles {
+    height:80px;
+    border-radius: 60%;
+    display: inline-block;
+    opacity: 75%;
+  }
+  #steelers{
+    height: 80px;
+    display: inline-block;
+    opacity: 75%;
   }

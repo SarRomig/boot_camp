@@ -14,7 +14,7 @@ class Vehicle {
     }
 }
 
-class Car extends Vehicle (make, model, year) {
+class Car extends Vehicle {
     constructor (make, model, year) {
         super();
     }
@@ -23,7 +23,7 @@ class Car extends Vehicle (make, model, year) {
     }
 }
 
-class Motorcycle extends Vehicle (make, model, year) {
+class Motorcycle extends Vehicle {
     constructor (make, model, year){
         super();
     }
@@ -41,14 +41,14 @@ class Garage {
         this.vehicles = [];
         this.capacity = capacity; //each new Garage will have a different capacity
     }
-add(vehicle) {
-    if (this.vehicles,length >= this.capacity) {
+    add(vehicle) {
+    if (this.vehicles.length >= this.capacity) {
         return "Sorry we're full!";
     }
     if (!(vehicle instanceof Vehicle)) {
         return "Only vehicles are allowed in here!!"; //had to get help here for instanceof: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
     }
     this.vehicles.push(vehicle);
-    return "Your vehicle is parked successfully in the garage!";
+    return "Your vehicle has been parked successfully in the garage!";
 }
 }

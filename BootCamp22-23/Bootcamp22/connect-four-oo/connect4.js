@@ -6,10 +6,13 @@
  */
 
 class Game { 
-  constructor (height, width, player1, player2) {
+  constructor (height, width, player1, player2) { //what else needs to be automatically here for every game? the boards
     this.height = height;
     this.width = width;
     this.currPlayer = player1;
+    this.gameOver = false;
+    this.makeBoard();
+    this.makeHtmlBoard;
   }
   makeBoard() {
     this.board = [];
@@ -22,8 +25,11 @@ class Game {
     const board = document.getElementById('board');
       const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', handleClick);
+    top.addEventListener('click', handleClick); //handleClick is currently not defined, need to call that method here?
   
+    //topRowClick = this.handleClick.bind(this?);
+
+
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
       headCell.setAttribute('id', x);
@@ -45,7 +51,7 @@ class Game {
   }
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
-      if (!board[y][x]) {
+      if (!this.board[y][x]) {
         return y;
       }
     }
@@ -54,7 +60,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${this.currPlayer}`);
+    piece.classList.add(`player${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
   
     const spot = document.getElementById(`${y}-${x}`);
@@ -64,6 +70,7 @@ class Game {
   endGame(msg) {
     alert(msg);
   }
+
   handleClick(evt) {
     const x = +evt.target.id;
       const y = this.findSpotForCol(x);

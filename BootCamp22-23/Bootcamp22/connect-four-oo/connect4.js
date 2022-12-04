@@ -6,13 +6,13 @@
  */
 
 class Game { 
-  constructor (height, width, player1, player2) { //what else needs to be automatically here for every game? the boards
-    this.height = height;
+  constructor (height, width, player1) { //what else needs to be automatically here for every game? the boards
+    this.height = height; //why can't we just set the width/height initially?
     this.width = width;
     this.currPlayer = player1;
     this.gameOver = false;
     this.makeBoard();
-    this.makeHtmlBoard;
+    this.makeHtmlBoard();
   }
   makeBoard() {
     this.board = [];
@@ -49,6 +49,7 @@ class Game {
       board.append(row);
     }
   }
+
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
       if (!this.board[y][x]) {
@@ -57,6 +58,7 @@ class Game {
     }
     return null;
   }
+
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');

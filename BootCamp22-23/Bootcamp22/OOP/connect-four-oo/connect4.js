@@ -18,8 +18,8 @@
   }
 
 class Game { 
-  constructor (height, width) { //what else needs to be automatically here for every game? the players?
-    this.height = height; //why can't we just set the width/height initially?
+  constructor (height, width) { 
+    this.height = height; 
     this.width = width;
     let colorP1 = document.querySelector("#p1-color").value;
     let colorP2 = document.querySelector("#p2-color").value;
@@ -85,16 +85,16 @@ class Game {
     
   endGame(msg) {
     alert(msg);
-    //top.removeEventListener("click", this.handleClick); this functionality isn't working in the sample exercise
+    this.gameOver = true;
   }
 
   handleClick(evt) {
     const x = +evt.target.id;
       const y = this.findSpotForCol(x);
-    if (y === null) {
+    if (y === null || this.gameOver == true ) {
       return;
     }
-  
+
     this.board[y][x] = this.currPlayer.id;
     this.placeInTable(y, x);
     

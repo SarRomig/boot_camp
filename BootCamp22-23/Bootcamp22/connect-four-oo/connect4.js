@@ -5,15 +5,31 @@
  * board fills (tie)
  */
 
+
+
+ class Player {
+  constructor (id, color) {
+    this.id = id;
+    this.color = color;
+  }
+  //should have a constructor that takes a string color name (eg, “orange” or “#ff3366”) and store that on the player instance. The Game should keep track of the current player object, not the current player number. Update the code so that the player pieces are the right color for them, rather than being hardcoded in CSS as red or blue
+  //form has id's of p1-color and p2-color
+  //p1-color.value stored in an object (player.p1color.value)
+  }
+
 class Game { 
-  constructor (height, width, player1) { //what else needs to be automatically here for every game? the boards
+  constructor (height, width) { //what else needs to be automatically here for every game? the players?
     this.height = height; //why can't we just set the width/height initially?
     this.width = width;
-    this.currPlayer = player1;
-    this.gameOver = false;
+    let colorP1 = document.querySelector("#p1-color").value;
+    let colorP2 = document.querySelector("#p2-color").value;
+    this.currPlayer = new Player (1, colorP1);
+    this.otherPlayer = new Player (2, colorP2);
+    this.gameOver = false; //add property for when game is over and make it so you can't continue to make moves after game has ended
     this.makeBoard();
     this.makeHtmlBoard();
   }
+
   makeBoard() {
     this.board = [];
     for (let y = 0; y < this.height; y++) {
@@ -25,10 +41,8 @@ class Game {
     const board = document.getElementById('board');
       const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', handleClick); //handleClick is currently not defined, need to call that method here?
-  
-    //topRowClick = this.handleClick.bind(this?);
 
+    top.addEventListener('click', this.handleClick.bind(this)); 
 
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
@@ -37,6 +51,7 @@ class Game {
     }
   
     board.append(top);
+
       for (let y = 0; y < this.height; y++) {
       const row = document.createElement('tr');
   
@@ -45,7 +60,6 @@ class Game {
         cell.setAttribute('id', `${y}-${x}`);
         row.append(cell);
       }
-
       board.append(row);
     }
   }
@@ -62,7 +76,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`player${this.currPlayer}`);
+    piece.style.backgroundColor = this.currPlayer.color;
     piece.style.top = -50 * (y + 2);
   
     const spot = document.getElementById(`${y}-${x}`);
@@ -71,6 +85,7 @@ class Game {
     
   endGame(msg) {
     alert(msg);
+    //top.removeEventListener("click", this.handleClick); this functionality isn't accurate in the sample exercise
   }
 
   handleClick(evt) {
@@ -80,22 +95,35 @@ class Game {
       return;
     }
   
-    this.board[y][x] = this.currPlayer;
+    this.board[y][x] = this.currPlayer.id;
     this.placeInTable(y, x);
     
     if (this.checkForWin()) {
-      return this.endGame(`Player ${this.currPlayer} won!`);
+      this.gameOver = true;
+      return this.endGame(`Player ${this.currPlayer.id} won!`);
     }
     
     if (this.board.every(row => row.every(cell => cell))) {
       return this.endGame('Tie!');
     }
       
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1; 
+    this.swapPlayers();
+
+  if (this.endGame == false) {
+    return;
   }
 
+  }
+
+  swapPlayers() {
+    let temp = this.currPlayer;
+    this.currPlayer = this.otherPlayer;
+    this.otherPlayer = temp;
+  }
+
+
   checkForWin() {
-    function _win(cells) {
+    const _win = (cells) => {
  
       return cells.every(
         ([y, x]) =>
@@ -103,7 +131,7 @@ class Game {
           y < this.height &&
           x >= 0 &&
           x < this.width &&
-          this.board[y][x] === this.currPlayer
+          this.board[y][x] === this.currPlayer.id
       );
     }
   
@@ -122,6 +150,10 @@ class Game {
       }
     }
   }
-  }
+}
 
-new Game (6,7);
+
+    document.querySelector("#start-btn").addEventListener("click", () => {
+      new Game(6,7);
+    });
+  

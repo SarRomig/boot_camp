@@ -85,7 +85,7 @@ class Game {
     
   endGame(msg) {
     alert(msg);
-    //top.removeEventListener("click", this.handleClick); this functionality isn't accurate in the sample exercise
+    //top.removeEventListener("click", this.handleClick); this functionality isn't working in the sample exercise
   }
 
   handleClick(evt) {

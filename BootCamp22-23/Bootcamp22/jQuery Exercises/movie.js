@@ -1,29 +1,27 @@
 
 
 
-$("#submit-btn").on("click", function () {
-    $(".inputs").submit();
+$(".form-data").on("submit", function (evt) {
+    evt.preventDefault();
     const $titleInput = $("#title").val();
     const $ratingInput = $("#rating").val();
-    $("<li class = 'new-title'></p>").text($titleInput).appendTo($(".append-the-movies"));
-    $("<li></li>").text("Rating" + " " + $ratingInput).appendTo($(".new-title"));
+    $("<p class = 'new-title'></p>").text("Title: " + $titleInput + " Rating: " + $ratingInput + " ").appendTo($(".movie-list"));
     $(".new-title").append('<button class = "removal"> Remove Movie </button>');
-    //$(".inputs").trigger("reset"); -- form reset?
-    $(".append-the-movies").on("click", ".removal", function (){
-        //there's got to be a better way to remove... right now removing whole list not just one li at a time
-        const $removedTitle = $(".removal").parent();
-        $removedTitle.remove();
-        $removedTitle.children().remove();
+    $(".form-data").trigger("reset");
+    $(".movie-list").on("click", ".removal", function (evt){
+        removeMovie(evt.target);
     })
-    //add button to initiate sort
-$("<button class = 'sort'> Sort Movies </button>").appendTo("div");
-const mylist = $('.append-the-movies');
-const listitems = mylist.children('li').get();
-listitems.sort(function(a, b) {
-    Array.from($(".new-title"))
-   return a.textContent.localeCompare(b.textContent)
-   
 })
 
-})
+function removeMovie (target) {
+    $(target).closest("p").remove();
+}
 
+
+//add button to initiate sort
+//add new titles to an array in order to sort (or an object since there are ratings, too)
+
+// function(a, b) {
+//     Array.from($(".new-title"))
+//    return a.textContent.localeCompare(b.textContent) //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+//     }

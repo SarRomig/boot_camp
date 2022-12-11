@@ -1,11 +1,12 @@
 
-
+const movieObj = {};
 
 $(".form-data").on("submit", function (evt) {
     evt.preventDefault();
     const $titleInput = $("#title").val();
-    //.push($titleInput) OR movieobj.title = $(titleInput);
+    movieObj.title = $titleInput; //will replace every time...
     const $ratingInput = $("#rating").val();
+    movieObj.rating = $ratingInput;
     $("<p class = 'new-title'></p>").text("Title: " + $titleInput + " Rating: " + $ratingInput + " ").appendTo($(".movie-list"));
     $(".new-title").append('<button class = "removal"> Remove Movie </button>');
     $(".form-data").trigger("reset");
@@ -20,7 +21,10 @@ function removeMovie (target) {
 
 
 //add button to initiate sort
-//add new titles to an array in order to sort (or an object since there are ratings, too) then re set on the page as a div/p
+//sort movieObj on page then reset display of movieObj 
+
+
+
 
 // function(a, b) {
 //     Array.from($(".new-title"))

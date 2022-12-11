@@ -1,0 +1,20 @@
+What is HTTP?
+    HyperText Transfer Protocol
+What is a URL?
+    universal resource locator
+What is DNS?
+    domain name system, like a phone book for servers to translate hostnames into IP Addresses
+What is a query string?
+    assigns values to specific parameters - determines page appearance, language, html
+What are two HTTP verbs and how are they different?
+    GET: requests without side effects on the servers
+    POST: requests with side effects. Sending data, storing information on server
+What is an HTTP request?
+    Messages sent by browser to initiate action on a server
+What is an HTTP response?
+    Messages sent by server to the browser to provide the resource it requested or inform that an action couldn't be carried out
+What is an HTTP header? Give a couple examples of request and response headers you have seen.
+    Field of a request or response that gives more context/data about the request/response
+    Accept-Language: fr
+What are the processes that happen when you type “http://somesite.com/some/page.html” into a browser?
+    The DNS turns the site name into an IP Address, the browser connects to the server on a port, asking for some page or information along with a query string to provide more context, that is sent to the server then the server processes the request within itself or by going to a database and then send a response to the browser with the results of the request. 

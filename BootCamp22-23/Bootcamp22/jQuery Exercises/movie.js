@@ -8,7 +8,7 @@ $(".form-data").on("submit", function (evt) {
     const $ratingInput = $("#rating").val();
     movieObj.rating = $ratingInput;
     $("<p class = 'new-title'></p>").text("Title: " + $titleInput + " Rating: " + $ratingInput + " ").appendTo($(".movie-list"));
-    $(".new-title").append('<button class = "removal"> Remove Movie </button>');
+    $(".new-title").append('<button class = "removal"> Remove Movie </button>'); //this is being added again to the first title addition when a new movie is added because it's adding to the whole class
     $(".form-data").trigger("reset");
     $(".movie-list").on("click", ".removal", function (evt){
         removeMovie(evt.target);

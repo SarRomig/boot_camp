@@ -5,15 +5,15 @@ async function getGif(term) {
     try {
       const res = await axios.get("https://api.giphy.com/v1/gifs/search", { params: {api_key: giphyKey, q: term}});
     const resultsLength = res.data.length;
-    if (resultsLength) {
-        let index = Math.floor(Math.random() * resultsLength); //select random Gif
+       // let index = Math.floor(Math.random() * resultsLength); //select random url index
         const img = document.createElement("img");
-        img.src = res.data[randomIdx].url;
-    }
+        img.src = res.data[0]; //trying with a hard coded index to start
+    
     console.log(res);
-     return img; //returning undefined - try img.src?
+     return img; //returning undefined
 
-    } catch (e) {
+    }
+     catch (e) {
       alert("No gifs found!");
     }
   }
@@ -28,14 +28,14 @@ async function appendGif() {
 }
 
 const searchBtn = document.querySelector("#searchBtn");
-btn.addEventListener("click", function (e) {
+searchBtn.addEventListener("click", async function (e) {
   e.preventDefault();
-  appendGif();
+    await appendGif();
 });
 
 const removeBtn = document.querySelector("#removeBtn");
 
-btn.addEventListener("click", function (e) {
+removeBtn.addEventListener("click", function (e) {
     const gifLand = document.querySelector("#gifLand");
     gifLand.innerHTML = "";
   });

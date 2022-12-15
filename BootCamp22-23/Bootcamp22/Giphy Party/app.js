@@ -4,14 +4,14 @@ const form = document.querySelector('#memeSearch');
 async function getGif(term) {
     try {
       const res = await axios.get("https://api.giphy.com/v1/gifs/search", { params: {api_key: giphyKey, q: term}});
-    const results = res.data.length;
-    if (results) {
-        let index = Math.floor(Math.random() * results); //select random Gif
+    const resultsLength = res.data.length;
+    if (resultsLength) {
+        let index = Math.floor(Math.random() * resultsLength); //select random Gif
         const img = document.createElement("img");
         img.src = res.data[randomIdx].url;
     }
     console.log(res);
-     return img; //returning undefined
+     return img; //returning undefined - try img.src?
 
     } catch (e) {
       alert("No gifs found!");

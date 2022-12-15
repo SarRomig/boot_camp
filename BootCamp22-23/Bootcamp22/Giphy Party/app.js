@@ -7,15 +7,13 @@ async function getGif(term) {
     const resultsLength = res.data.data.length;
     console.log(res);
        let index = Math.floor(Math.random() * resultsLength); //select random url index
-       console.log(index)
         const img = document.createElement("img");
        img.src = res.data.data[index].images.downsized.url; 
     
-     return img; //returning undefined
-
+     return img; 
     }
      catch (e) {
-      //alert("No gifs found!");
+      alert("No gifs found!");
     }
   }
 
@@ -23,7 +21,7 @@ async function getGif(term) {
 async function appendGif() {
     const input = document.querySelector('#searchTerm');
     const gifLand = document.querySelector("#gifLand");
-    const gifImg = await getGif(input);
+    const gifImg = await getGif(input.value);
     gifLand.append(gifImg);
     input.value = '';
 }

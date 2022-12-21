@@ -3,8 +3,7 @@
 const $showsList = $("#showsList");
 const $episodesArea = $("#episodesArea");
 const $searchForm = $("#searchForm");
-
-const missingImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png";
+const missingImage = "https://tinyurl.com/tv-missing";
 
 /** Given a search term, search for tv shows that match that query.
  *
@@ -15,17 +14,18 @@ const missingImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/
 
 async function getShowsByTerm(term) {
   // ADD: Remove placeholder & make request to TVMaze search shows API.
-  const res = await axios.get("https://api.tvmaze.com/singlesearch/shows", {params: {q: term}});
-  return [
-    {
-      id: res.id,
-      name: res.name,
-      summary:
-        res.summary,
-      image:
-      res.image ? show.image.medium : missingImage,
+  const response = await axios.get("http://api.tvmaze.com/search/shows", {params: {q: term}})
+
+  return response.data.map(result => { //map into array contatining information for show
+    const show = result.show;
+    return {
+      id: show.id,
+      name: show.name,
+      summary: show.summary,
+      image: show.image ? show.image.medium : missingImage
     }
-  ];
+  })
+
 }
 
 
@@ -35,17 +35,14 @@ function populateShows(shows) {
   $showsList.empty();
 
   for (let show of shows) {
-    const $show = $(
+    const $show = $( //use button id later to add functionality
       `<div data-show-id="${show.id}" class="Show col-md-12 col-lg-6 mb-4">
          <div class="media">
-           <img
-              src="http://static.tvmaze.com/uploads/images/medium_portrait/160/401704.jpg"
-              alt="Bletchly Circle San Francisco"
-              class="w-25 me-3">
+           <img class="card-img-top" src="${show.image}">
            <div class="media-body">
              <h5 class="text-primary">${show.name}</h5>
              <div><small>${show.summary}</small></div>
-             <button class="btn btn-outline-light btn-sm Show-getEpisodes">
+             <button class="btn btn-outline-light btn-sm Show-getEpisodes"> 
                Episodes
              </button>
            </div>
@@ -81,12 +78,38 @@ $searchForm.on("submit", async function (evt) {
  */
 
 async function getEpisodesOfShow(id) { 
-  
+  const epResponse = await axios.get("https://api.tvmaze.com/episodes/", {params: {q: id}}) //the base url is not drawing from the API, says CORS error
 
-
+  return epResponse.data.map(result => { //map into array contatining information for episode
+    const episode = result.episode;
+    return {
+      id: episode.id,
+      name: episode.name,
+      season: episode.season,
+      numer: episode.number
+    }
+  })
 
 }
 
 /** Write a clear docstring for this function... */
 
-// function populateEpisodes(episodes) { }
+function populateEpisodes(episodes) { //episodes is an array, can loop over to create the list
+
+  for(let episode of episodes) {
+  const $li = $(`<li>${episode.name}, Season: ${episode.season}, Number: ${episode.number}</li>`);
+  $episodesList.append($li);
+  }
+  $episodesArea.show();
+
+}
+//add an "episodes" button at bottom of each show card - from populateShows function, button class = btn btn-outline-light btn-sm Show-getEpisodes
+
+async function getEpIdAndShow (e) {
+  const id = $(e.target).closest(".Show").data("show-id"); //getting id to pass into episodes function then populating episodes in DOM with populateEpisodes function
+
+  const episodes = await getEpisodesOfShow(id);
+  populateEpisodes(episodes);
+}
+
+$showsList.on("click", ".Show-getEpisodes", getEpIdAndShow)

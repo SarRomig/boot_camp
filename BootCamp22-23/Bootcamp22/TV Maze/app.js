@@ -78,7 +78,7 @@ $searchForm.on("submit", async function (evt) {
  */
 
 async function getEpisodesOfShow(id) { 
-  const epResponse = await axios.get("https://api.tvmaze.com/episodes/", {params: {q: id}}) //the base url is not drawing from the API, says CORS error
+  const epResponse = await axios.get("https://api.tvmaze.com/episodes/", {params: {q: id}}) //the base url is not drawing from the API, says CORS error?
 
   return epResponse.data.map(result => { //map into array contatining information for episode
     const episode = result.episode;
